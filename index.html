@@ -384,7 +384,20 @@ table.pr tr:nth-child(even) td{background:#f5f7fa}
 .docs-loading{text-align:center;color:var(--muted);font-size:14px;padding:30px 0}
 .docs-empty{text-align:center;color:var(--muted);font-size:14px;padding:30px 0}
 .docs-empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
-.docs-sec{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--orange);font-weight:700;margin:26px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.docs-group{margin-bottom:10px}
+.docs-sec{width:100%;display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--navy);font-weight:700;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left}
+.docs-sec:hover{border-color:var(--navy)}
+.docs-sec .caret{width:16px;height:16px;flex:none;fill:none;stroke:var(--orange);stroke-width:2.5;transition:transform .18s}
+.docs-sec.open .caret{transform:rotate(90deg)}
+.docs-sec>span:first-of-type{flex:1}
+.docs-count{flex:none;background:var(--orange-soft);color:var(--orange-dk);font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:0}
+.docs-rows{padding:8px 0 4px 4px}
+.docs-allbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.docs-dlall{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:12px 18px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.docs-dlall:hover{background:var(--navy-dk)}
+.docs-dlall:disabled{opacity:.6;cursor:default}
+.docs-dlall svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2}
+.docs-dlstatus{font-size:13px;color:var(--muted)}
 .doc-row{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:8px;text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s}
 .doc-row:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(28,53,94,.08)}
 .doc-row .dico{flex:none;width:34px;height:34px;border-radius:8px;background:var(--orange-soft);display:flex;align-items:center;justify-content:center}
@@ -530,7 +543,7 @@ table.pr tr:nth-child(even) td{background:#f5f7fa}
   <div class="docs" id="docsView" style="display:none">
     <div class="docs-intro">
       <h2>Documents</h2>
-      <p>Safety data sheets, product info sheets and compliance certificates. Tap any document to open or download the PDF. <span style="opacity:.4;font-size:11px">build v39</span></p>
+      <p>Safety data sheets, product info sheets and compliance certificates. Tap any document to open or download the PDF. <span style="opacity:.4;font-size:11px">build v40</span></p>
       <div class="docs-search"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="docSearch" type="text" placeholder="Search by product name…"></div>
     </div>
     <div id="docsLoading" class="docs-loading">Loading documents…</div>
@@ -1384,7 +1397,7 @@ let toastT;function toast(msg,ok=true){const el=$("#toast");$("#toastMsg").textC
 /* ===== Documents tab ===== */
 const DOCS_BASE="https://ic-roots.github.io/Dis-Chem-Portal/docs/";
 const DOCS={sds:[{n:"Diner-bac 5L",f:"Diner-bac SDS.pdf"},{n:"Diner-drain 5L",f:"Diner-drain SDS.pdf"},{n:"Diner-gen 5L",f:"Diner-gen SDS.pdf"},{n:"Diner-gen MK",f:"Diner-gen MK SDS.pdf"},{n:"Diner-scale 5L",f:"Diner-scale SDS.pdf"},{n:"Diner-tap 5L",f:"Diner-tap SDS.pdf"},{n:"Indubowl 5L",f:"Indubowl SDS.pdf"},{n:"Induspray 5L",f:"Induspray SDS.pdf"},{n:"Induspray Wipes 2000",f:"Induspray Wipes SDS.pdf"},{n:"Pro-Inox 500ml",f:"Pro-inox SDS.pdf"},{n:"Proflex 5L",f:"Proflex SDS.pdf"},{n:"Proflex MK",f:"Proflex MK SDS.pdf"},{n:"Progen 5L",f:"Progen SDS.pdf"},{n:"Progen MK",f:"Progen MK SDS.pdf"},{n:"Prosan XP 5L",f:"Prosan XP SDS.pdf"},{n:"Prosan XP MK",f:"Prosan XP MK SDS.pdf"},{n:"Proscrub MK",f:"Proscrub MK SDS.pdf"},{n:"Proscrub XP 5L",f:"Proscrub XP SDS.pdf"},{n:"Sintol Sachets 30g",f:"Sintol Sachets 30g SDS.pdf"},{n:"Sintol Sachets 6g",f:"Sintol Sachets 6g SDS.pdf"}],info:[{n:"Diner-bac 5L",f:"Diner-bac Info Sheet.pdf"},{n:"Diner-drain 5L",f:"Diner-drain Info Sheet.pdf"},{n:"Diner-gen 5L",f:"Diner-gen Info Sheet.pdf"},{n:"Diner-gen MK",f:"Diner-gen MK Info Sheet.pdf"},{n:"Diner-scale 5L",f:"Diner-scale Info Sheet.pdf"},{n:"Diner-tap 5L",f:"Diner-tap Info Sheet.pdf"},{n:"Indubowl 5L",f:"Indubowl Info Sheet.pdf"},{n:"Induspray 5L",f:"Induspray Info Sheet.pdf"},{n:"Induspray Wipes 2000",f:"Induspray Wipes Info Sheet.pdf"},{n:"Pro-Inox 500ml",f:"Pro-inox Info Sheet.pdf"},{n:"Proflex 5L",f:"Proflex Info Sheet.pdf"},{n:"Proflex MK",f:"Proflex MK Info Sheet.pdf"},{n:"Progen 5L",f:"Progen Info Sheet.pdf"},{n:"Progen MK",f:"Progen MK Info Sheet.pdf"},{n:"Prosan XP 5L",f:"Prosan XP Info Sheet.pdf"},{n:"Prosan XP MK",f:"Prosan XP MK Info Sheet.pdf"},{n:"Proscrub MK",f:"Proscrub MK Info Sheet.pdf"},{n:"Proscrub XP 5L",f:"Proscrub XP Info Sheet.pdf"},{n:"Sintol Sachets 30g",f:"Sintol Sachets 30g Info Sheet.pdf"},{n:"Sintol Sachets 6g",f:"Sintol Sachets 6g Info Sheet.pdf"}],cert:[{n:"SANS 1828 (2024)",f:"SANS 1828 of 2024 Certificate.pdf"},{n:"SANS 1853 (2020)",f:"SANS 1853.2020 Certificate (1).pdf"},{n:"SANS 490",f:"SANS 490 INDUSTROCLEAN PTY LTD - Certificate.pdf"},{n:"ISO 9001",f:"ISO9001 Certificate.pdf"}]};
-let docQ="",docsLoaded=false,docAvail={};
+let docQ="",docsLoaded=false,docAvail={},docOpen={};
 function docIcon(){return '<span class="dico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>';}
 function checkDoc(url){
   // Plain same-origin GET. The file opens directly in the browser, so a normal GET
@@ -1412,21 +1425,73 @@ function loadDocs(){
     });
   });
 }
-function docSection(title,items){
+function docSection(title,items,key){
   const rows=items.filter(d=>docAvail[d.f]&&(!docQ||d.n.toLowerCase().includes(docQ)));
   if(!rows.length)return "";
-  let h='<div class="docs-sec">'+esc(title)+'</div>';
+  const open=docOpen[key]||docQ; // auto-expand while searching
+  let h='<div class="docs-group">';
+  h+='<button type="button" class="docs-sec'+(open?' open':'')+'" onclick="toggleDocSec(\''+key+'\')">'
+    +'<svg class="caret" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>'
+    +'<span>'+esc(title)+'</span><span class="docs-count">'+rows.length+'</span></button>';
+  h+='<div class="docs-rows" style="display:'+(open?'block':'none')+'">';
   h+=rows.map(d=>'<a class="doc-row" href="'+DOCS_BASE+encodeURIComponent(d.f)+'" target="_blank" rel="noopener">'+docIcon()+'<span class="dname">'+esc(d.n)+'</span><span class="dopen">Open <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></span></a>').join("");
+  h+='</div></div>';
   return h;
+}
+function toggleDocSec(key){docOpen[key]=!docOpen[key];renderDocs();}
+function loadJSZip(){
+  return new Promise((res,rej)=>{
+    if(window.JSZip)return res(window.JSZip);
+    const s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+    s.onload=()=>res(window.JSZip);s.onerror=()=>rej(new Error("zip library failed to load"));
+    document.head.appendChild(s);
+  });
+}
+function downloadAllDocs(){
+  const btn=document.getElementById("dlAllBtn"),st=document.getElementById("dlAllStatus");
+  if(!btn)return;
+  const all=[...DOCS.sds,...DOCS.info,...DOCS.cert].filter(d=>docAvail[d.f]);
+  if(!all.length)return;
+  btn.disabled=true;
+  st.textContent="Preparing… loading library";
+  loadJSZip().then(JSZip=>{
+    const zip=new JSZip();
+    const folders={sds:zip.folder("Safety Data Sheets"),info:zip.folder("Info Sheets"),cert:zip.folder("Certificates")};
+    function folderFor(f){if(DOCS.sds.some(d=>d.f===f))return folders.sds;if(DOCS.info.some(d=>d.f===f))return folders.info;return folders.cert;}
+    let done=0;
+    return Promise.all(all.map(d=>
+      fetch(DOCS_BASE+encodeURIComponent(d.f)).then(r=>r.blob()).then(b=>{
+        folderFor(d.f).file(d.f,b);done++;st.textContent="Fetching "+done+" of "+all.length+"…";
+      }).catch(()=>{done++;})
+    )).then(()=>{
+      st.textContent="Building ZIP…";
+      return zip.generateAsync({type:"blob"});
+    }).then(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url;a.download="Industroclean-DisChem-Documents.zip";
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+      st.textContent="Downloaded \u2713";btn.disabled=false;
+    });
+  }).catch(e=>{st.textContent="Could not build ZIP. Try opening documents individually.";btn.disabled=false;});
 }
 function renderDocs(){
   const body=document.getElementById("docsBody");
   let h="";
-  h+=docSection("Safety Data Sheets (SDS)",DOCS.sds);
-  h+=docSection("Info Sheets",DOCS.info);
-  h+=docSection("Certificates",DOCS.cert);
-  body.innerHTML=h;
+  h+=docSection("Safety Data Sheets (SDS)",DOCS.sds,"sds");
+  h+=docSection("Info Sheets",DOCS.info,"info");
+  h+=docSection("Certificates",DOCS.cert,"cert");
+  // download-all bar (only when something is available and not filtering)
   const anyAvail=Object.values(docAvail).some(Boolean);
+  let bar="";
+  if(anyAvail&&!docQ){
+    bar='<div class="docs-allbar"><button type="button" id="dlAllBtn" class="docs-dlall" onclick="downloadAllDocs()">'
+      +'<svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Download all documents (ZIP)</button>'
+      +'<span id="dlAllStatus" class="docs-dlstatus"></span></div>';
+  }
+  body.innerHTML=(h?bar:"")+h;
   const loading=document.getElementById("docsLoading").style.display!=="none";
   document.getElementById("docsEmpty").style.display=(!h&&!loading)?"block":"none";
   if(!h&&!loading&&anyAvail){document.getElementById("docsEmpty").innerHTML="<b>No documents match</b>Try a different product name.";}
