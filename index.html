@@ -1386,7 +1386,12 @@ const DOCS={sds:[{n:"Diner-bac 5L",f:"diner-bac-5l-sds.pdf"},{n:"Progen 5L",f:"p
 let docQ="",docsLoaded=false,docAvail={};
 function docIcon(){return '<span class="dico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>';}
 function checkDoc(url){
-  return fetch(url,{method:"HEAD"}).then(r=>r.ok).catch(()=>false);
+  // Use GET (not HEAD) — GitHub Pages answers HEAD with 204, which breaks existence checks.
+  // Range header asks for just the first byte, so we confirm the file exists without
+  // downloading the whole PDF. 200, 206 (partial) and 304 all mean the file is there.
+  return fetch(url,{method:"GET",headers:{"Range":"bytes=0-0"},cache:"no-store"})
+    .then(r=>r.status===200||r.status===206||r.status===304)
+    .catch(()=>false);
 }
 function loadDocs(){
   if(docsLoaded)return;
