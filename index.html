@@ -1386,12 +1386,10 @@ const DOCS={sds:[{n:"Diner-bac 5L",f:"Diner-bac SDS.pdf"},{n:"Diner-drain 5L",f:
 let docQ="",docsLoaded=false,docAvail={};
 function docIcon(){return '<span class="dico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>';}
 function checkDoc(url){
-  // Use GET (not HEAD) — GitHub Pages answers HEAD with 204, which breaks existence checks.
-  // Range header asks for just the first byte, so we confirm the file exists without
-  // downloading the whole PDF. 200, 206 (partial) and 304 all mean the file is there.
-  return fetch(url,{method:"GET",headers:{"Range":"bytes=0-0"},cache:"no-store"})
-    .then(r=>r.status===200||r.status===206||r.status===304)
-    .catch(()=>false);
+  // Plain same-origin GET. The file opens directly in the browser, so a normal GET
+  // returns ok (status 200). Avoid HEAD (GitHub Pages answers 204) and avoid a Range
+  // header (can return statuses we'd misread). r.ok covers 200-299.
+  return fetch(url).then(r=>r.ok).catch(()=>false);
 }
 function loadDocs(){
   if(docsLoaded)return;
@@ -1402,7 +1400,13 @@ function loadDocs(){
   all.forEach(d=>{
     checkDoc(DOCS_BASE+encodeURIComponent(d.f)).then(ok=>{
       docAvail[d.f]=ok;done++;
-      if(done===all.length){document.getElementById("docsLoading").style.display="none";}
+      if(done===all.length){
+        document.getElementById("docsLoading").style.display="none";
+        // Fallback: if the existence checks found nothing at all, the check itself is
+        // being blocked (not the files missing) — show every document as a link instead,
+        // so the tab is never wrongly blank. The links open fine on their own.
+        if(!Object.values(docAvail).some(Boolean)){all.forEach(x=>docAvail[x.f]=true);}
+      }
       renderDocs();
     });
   });
